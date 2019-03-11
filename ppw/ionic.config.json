@@ -1,5 +1,7 @@
 {
   "name": "ppw",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
