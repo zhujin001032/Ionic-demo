@@ -6,4 +6,29 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content></ion-content>
+<ion-content>
+    <button class="button" ng-click="getarea()">点击我获取地址百度</button>
+    <div id='allmap' style=""></div>
+</ion-content>
+
+<script>
+let onDeviceReady = function () {
+    initBaiduMap();
+};
+
+function initBaiduMap() {
+    // 进行定位
+    if ('baidumap_location' in window) {
+        baidumap_location.getCurrentPosition(function (result) {
+            console.log(result);
+        }, function (error) {
+            console.error(error);
+        });
+    } else {
+        console.error('baidumap_location is undefined');
+    }
+}
+
+document.addEventListener("deviceready", onDeviceReady, false);
+
+</script>
