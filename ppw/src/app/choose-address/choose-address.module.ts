@@ -1,3 +1,4 @@
+import { SearchAddressComponent } from './search-address/search-address.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -22,6 +23,8 @@ const routes: Routes = [
     RouterModule.forChild(routes)
   ],
   exports: [ChooseAddressPage],
-  declarations: [ChooseAddressPage]
+  declarations: [ChooseAddressPage, SearchAddressComponent],
+  entryComponents: [SearchAddressComponent]
+
 })
 export class ChooseAddressPageModule { }

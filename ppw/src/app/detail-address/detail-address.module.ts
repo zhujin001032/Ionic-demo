@@ -1,10 +1,10 @@
-import { NgModule } from '@angular/core';
+import { ChooseCityComponent } from './choose-city/choose-city.component';
+import { NgModule, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
-
 import { DetailAddressPage } from './detail-address.page';
 
 const routes: Routes = [
@@ -19,8 +19,11 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
   ],
-  declarations: [DetailAddressPage]
+  entryComponents: [ChooseCityComponent],
+  declarations: [DetailAddressPage, ChooseCityComponent]
 })
-export class DetailAddressPageModule {}
+
+export class DetailAddressPageModule {
+}
