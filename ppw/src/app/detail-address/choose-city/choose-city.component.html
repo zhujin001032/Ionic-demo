@@ -19,13 +19,32 @@
       当前定位城市
     </div>
     <div>
-      <ion-button (click)="onCurrentCityClick()">
-        <img src="/assets/icon/nav_icon_close@2x.png" class="nav-icon-size">
-        深圳
-      </ion-button>
-    </div>
+      <ion-row>
+        <ion-col size="4">
+          <ion-button (click)="onCurrentCityClick()" class="city-bg" fill="clear">
+            <img src="/assets/icon/city_icon_location_red@2x.png" class="nav-icon-size">
+            深圳
+          </ion-button>
+        </ion-col>
+      </ion-row>
 
+    </div>
+    <br>
     <div>热门城市</div>
+    <ion-grid class="grid-padding">
+      <ion-row>
+        <ion-col class="city-bg">
+          ion-col
+        </ion-col>
+        <ion-col class="city-bg">
+          ion-col
+        </ion-col>
+        <ion-col class="city-bg">
+          ion-col
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
 
   </div>
 

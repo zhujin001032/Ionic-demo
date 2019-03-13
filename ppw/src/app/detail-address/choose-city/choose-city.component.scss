@@ -1,3 +1,19 @@
 .left{
-    padding-left: 15px
+    padding-left: 15px;
+}
+.city-bg{
+    background-color: lightgray ;
+    color: gray;
+    border-radius : 5px;
+}
+.grid-padding{
+    --ion-grid-padding : 15px;//行间距
+    --ion-grid-column-padding: 15px;// 单个item内容的padding
+
+}
+.city-item{
+color: black;
+
+
+
 }

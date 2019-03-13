@@ -12,7 +12,9 @@ export class ChooseCityComponent implements OnInit {
   }
 
   ngOnInit() { }
+  async loadDataFromJson() {
 
+  }
   backWithCity() {
     this.navParams.data.modal.dismiss();
   }
