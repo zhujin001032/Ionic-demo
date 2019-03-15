@@ -7,5 +7,20 @@
 </ion-header>
 
 <ion-content>
-  <ion-button (click)="detailAddress()" href="/detail-address">详细地址</ion-button> 
+
+  <ion-button (click)="detailAddress()" href="/detail-address">详细地址</ion-button>
+  <!-- <ion-item detail class="commonCustomItem">
+    <ListItem Picker style="padding-left:3px; width: 100px;" [data]="data" [extra]="name1" [appendToBody]="true"
+      [cascade]="true" [mask]="false" [(ngModel)]="value1" [cols]="2" (ngModelChange)="onOk1($event)"
+      (onDismiss)="onDismiss1()">
+      <p>区域</p>
+    </ListItem>
+  </ion-item> -->
+  <List>
+    <ListItem Picker [extra]="name" [arrow]="'horizontal'" [data]="singleArea" [(ngModel)]="value"
+      (ngModelChange)="onOk1($event)">
+      Single
+    </ListItem>
+  </List>
+
 </ion-content>

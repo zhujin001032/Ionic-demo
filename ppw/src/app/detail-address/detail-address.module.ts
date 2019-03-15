@@ -1,3 +1,4 @@
+import { NgZorroAntdMobileModule } from 'ng-zorro-antd-mobile';
 import { ChooseCityComponent } from './choose-city/choose-city.component';
 import { NgModule, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -20,9 +21,11 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
+    NgZorroAntdMobileModule,
   ],
   entryComponents: [ChooseCityComponent],
   declarations: [DetailAddressPage, ChooseCityComponent, FilterPipe]
+
 })
 
 export class DetailAddressPageModule {

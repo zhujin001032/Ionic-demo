@@ -27,21 +27,33 @@
       </ion-col>
     </ion-item>
 
-    <ion-item detail (click)="chooseZone()">
-      <ion-col size="4" class="address-item-title">
-        <ion-label>区域</ion-label>
-      </ion-col>
-      <ion-col size="8" class="address-item-content">
-        <ion-label> {{zone}}</ion-label>
-      </ion-col>
+    <ion-item detail class="commonCustomItem">
+      <ListItem Picker style="padding-left:3px; width: 80%;" [data]="zoneList" [extra]="zoneStr" [appendToBody]="true"
+        [cascade]="true" [mask]="false" [(ngModel)]="value1" [cols]="2" (ngModelChange)="onOk1($event)"
+        (onDismiss)="onDismiss1()">
+        <p>区域</p>
+      </ListItem>
     </ion-item>
 
-    <ion-item detail="false" (click)="chooseDetailAddressFromMap()">
+    <!-- <ion-item detail> -->
+
+    <!-- <ion-col size="4" class="address-item-title"> -->
+
+    <!-- </ion-col> -->
+    <!-- <ion-col size="8" class="address-item-content"> -->
+    <!-- <ion-label> {{name1}}</ion-label> -->
+    <!-- <ion-label> {{zone}}</ion-label> -->
+    <!-- </ion-col> -->
+    <!-- </ion-item> -->
+
+
+
+    <ion-item class="item-text-wrap" detail="false" lines="inset" (click)="chooseDetailAddressFromMap()">
       <ion-col size="4" class="address-item-title">
         <ion-label>详细地址</ion-label>
       </ion-col>
       <ion-col class="address-item-content">
-        <ion-label> {{detail}}</ion-label>
+        <ion-label> 萨克和凯撒好看哈萨克就好撒客户萨科技和萨卡斯 {{detail}}</ion-label>
       </ion-col>
       <ion-col size="2">
         <ion-icon name="pin" slot="end"></ion-icon>
@@ -56,13 +68,6 @@
         <ion-input placeholder="请填写" type="text" clearInput="true"></ion-input>
       </ion-col>
     </ion-item>
-
-    <!-- <ion-item>
-      <ion-label>Simple Picker</ion-label>
-      <ion-multi-picker item-content [multiPickerColumns]="simpleColumns"></ion-multi-picker>
-    </ion-item> -->
-
   </ion-list>
-
 
 </ion-content>

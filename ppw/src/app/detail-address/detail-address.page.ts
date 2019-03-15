@@ -1,67 +1,72 @@
-
-import { AppRoutingModule } from './../app-routing.module';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
-// import { Picker } from 'ng-zorro-antd-mobile';
 import { ModalController } from '@ionic/angular';
 import { ChooseCityComponent } from './choose-city/choose-city.component';
 import { PickerController } from '@ionic/angular';
+// 级联picker
+import { Picker } from 'ng-zorro-antd-mobile';
+
+import { fromEventPattern, from, config } from 'rxjs';
 @Component({
   selector: 'app-detail-address',
   templateUrl: './detail-address.page.html',
   styleUrls: ['./detail-address.page.scss'],
-  // providers: [Picker]
+  providers: [Picker]
 
 })
 export class DetailAddressPage implements OnInit {
+
+  public zoneList = [{ label: '深圳市', code: '4403', children: [{ label: '南山区', code: '440301' }, { label: '南油', code: '440302' }] },
+  { label: '北京市', code: '11', children: [{ label: '海定区', code: '1101' }, { label: '崇文区', code: '1102' }] }];
+
+  public value1 = [{ label: '深圳市', code: '4403', children: [{ label: '南山区', code: '440301' }, { label: '南油', code: '440302' }] },
+  { label: '北京市', code: '11', children: [{ label: '海定区', code: '1101' }, { label: '崇文区', code: '1102' }] }];
+
   simpleColumns: { name: string; options: { text: string; value: string; }[]; }[];
+
+  public city = '';
+  public zone = '';
+  public detail = '';
+  zoneStr = '请选择';
+  value = [];
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     public modalController: ModalController,
     public pickerCtrl: PickerController,
-
+    private _picker: Picker
   ) {
 
     this.city = '深圳';
-    this.simpleColumns = [
-      {
-        name: 'col1',
-        options: [
-          { text: '1', value: '1' },
-          { text: '2', value: '2' },
-          { text: '3', value: '3' }
-        ]
-      }, {
-        name: 'col2',
-        options: [
-          { text: '1-1', value: '1-1' },
-          { text: '1-2', value: '1-2' },
-          { text: '2-1', value: '2-1' },
-          { text: '2-2', value: '2-2' },
-          { text: '3-1', value: '3-1' }
-        ]
-      }, {
-        name: 'col3',
-        options: [
-          { text: '1-1-1', value: '1-1-1' },
-          { text: '1-1-2', value: '1-1-2' },
-          { text: '1-2-1', value: '1-2-1' },
-          { text: '1-2-2', value: '1-2-2' },
-          { text: '2-1-1', value: '2-1-1' },
-          { text: '2-1-2', value: '2-1-2' },
-          { text: '2-2-1', value: '2-2-1' },
-          { text: '2-2-2', value: '2-2-2' },
-          { text: '3-1-1', value: '3-1-1' },
-          { text: '3-1-2', value: '3-1-2' }
-        ]
-      }
-    ];
   }
-  public city = '';
-  public zone = '';
-  public detail = '';
+
+  onOk1(result) {
+    this.zoneStr = this.getResult(result);
+    console.log('----------------' + this.zoneStr);
+  }
+
+  getResult(result) {
+    this.value = [];
+    let temp = '';
+    result.forEach(item => {
+      this.value.push(item.label || item);
+      temp += item.label || item;
+    });
+    return this.value.map(v => v).join(',');
+  }
+
+
+  getValue(result) {
+    const value = [];
+    let temp = '';
+    result.forEach(item => {
+      value.push(item.value || item);
+      temp += item.value || item;
+    });
+    return value;
+  }
   ngOnInit() { }
   sureAddress() {
     console.log('地址是：');
@@ -77,58 +82,10 @@ export class DetailAddressPage implements OnInit {
 
   }
 
-  async chooseZone() {
-    console.log('选择区域：');
-
-    const picker = await this.pickerCtrl.create({
-      buttons: [{
-        text: '取消', handler: () => {
-          console.log('取消!');
-        }
-      }, {
-        text: '确定', handler: (res) => {
-          console.log(res.district.text);
-        }
-      }],
-      columns: [
-        {
-          name: 'district',
-          options: [
-            {
-              text: '南山区',
-              value: 1
-            },
-            {
-              text: '宝安区',
-              value: 2
-            },
-            {
-              text: '龙华区',
-              value: 3
-            },
-          ]
-        },
-        {
-          name: 'zone',
-          options: [
-            {
-              text: '南油',
-              value: 1
-            },
-            {
-              text: '海雅百货',
-              value: 1
-            },
-            {
-              text: '南新天桥',
-              value: 1
-            }
-          ]
-        },
-      ],
-    });
-    await picker.present();
+  onDismiss1() {
+    console.log('cancel');
   }
+
   chooseDetailAddressFromMap() {
     console.log('选择地址：');
     this.router.navigate(['choose-address']);
