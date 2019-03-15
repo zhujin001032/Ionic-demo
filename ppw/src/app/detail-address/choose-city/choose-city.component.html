@@ -45,8 +45,8 @@
   </div>
 
 
-  <ion-list *ngFor="let item of listdata">
-    <ion-item>
+  <ion-list>
+    <ion-item *ngFor="let item of listdata">
       <ion-label color="dark">
         {{item.name}}
       </ion-label>
