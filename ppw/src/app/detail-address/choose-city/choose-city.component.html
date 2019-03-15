@@ -34,14 +34,14 @@
     <br>
     <div>热门城市</div>
 
-    <!-- <ion-grid class="grid-padding">
-      <ion-row class="ion-align-items-start" *ngFor="let rowList of getRowListByGridList(3); let i=index">
-        <ion-col offset="i%3 == 0 ? 0 : 1" class="city-bg" size="3" *ngFor="let city of rowList">
-          {{city.name}}
+    <ion-grid class="grid-padding">
+      <ion-row class="ion-align-items-start">
+        <ion-col *ngFor="let city of hotCityList; let i=index" offset="1" class="city-bg" size="3">
+          {{city.name}} {{i}}
         </ion-col>
 
       </ion-row>
-    </ion-grid> -->
+    </ion-grid>
 
 
   </div>

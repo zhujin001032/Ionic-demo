@@ -7,18 +7,21 @@ ion-searchbar{
 }
 
 .city-bg{
-    background-color: lightgray ;
-    color: gray;
+    background-color: #F7F8FA ;
     border-radius : 5px;
     margin-bottom: 10px;
+    text-align: center;
+    color:  #27282E;;
 }
 .grid-padding{
-    --ion-grid-padding : 15px;//行间距
-    --ion-grid-column-padding: 15px;// 单个item内容的padding
+    --ion-grid-padding : 10px;//行间距
+    --ion-grid-column-padding: 10px;// 单个item内容的padding
+    margin-left: -10%;
+    margin-right: 8%;
 
 }
 .city-item{
-color: black;
+color:  #27282E;;
 
 
 
