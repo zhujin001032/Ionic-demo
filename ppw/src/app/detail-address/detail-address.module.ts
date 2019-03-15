@@ -6,7 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 import { DetailAddressPage } from './detail-address.page';
-
+import { FilterPipe } from '../filter.pipe';
 const routes: Routes = [
   {
     path: '',
@@ -22,7 +22,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
   ],
   entryComponents: [ChooseCityComponent],
-  declarations: [DetailAddressPage, ChooseCityComponent]
+  declarations: [DetailAddressPage, ChooseCityComponent, FilterPipe]
 })
 
 export class DetailAddressPageModule {

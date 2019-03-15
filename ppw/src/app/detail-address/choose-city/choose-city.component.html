@@ -12,7 +12,9 @@
 
 <ion-content>
   <div>
-    <ion-searchbar show-cancel-button="true" placeholder="搜索城市"></ion-searchbar>
+    <ion-searchbar show-cancel-button="true" cancel-button-text="取消" placeholder="搜索城市" type="text" [(ngModel)]="term"
+      name="first">
+    </ion-searchbar>
   </div>
   <div class="left">
     <div>
@@ -46,11 +48,19 @@
 
 
   <ion-list>
-    <ion-item *ngFor="let item of listdata">
+    <ion-item *ngFor="let item of listdata | filter:term ">
       <ion-label color="dark">
         {{item.name}}
       </ion-label>
     </ion-item>
   </ion-list>
 
+  <!-- <ion-alpha-scroll *ngIf="listdata.length>0" [listData]="listdata" key="initial" [itemTemplate]="alphaScrollItemTemplate"
+    [currentPageClass]="currentPageClass"></ion-alpha-scroll> -->
+
 </ion-content>
+<!-- <ng-template #alphaScrollItemTemplate let-item="item" let-currentPageClass="currentPageClass">
+  <ion-item (click)="currentPageClass.onItemClick(item)">
+    <h2>{{item?.name}}</h2>
+  </ion-item>
+</ng-template> -->

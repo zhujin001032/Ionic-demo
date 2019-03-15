@@ -1,16 +1,17 @@
+
 import { CityService } from './../../services/city.service';
 import { Component, OnInit } from '@angular/core';
 import { NavParams } from '@ionic/angular';
 import { error } from '@angular/compiler/src/util';
+
 @Component({
   selector: 'app-choose-city',
   templateUrl: './choose-city.component.html',
   styleUrls: ['./choose-city.component.scss'],
-  // providers: [CityService],
 })
 export class ChooseCityComponent implements OnInit {
   // 城市数据
-  listdata: Object;
+  listdata: any;
   hotCityList: any;
   rowList: any;
   // 
@@ -21,10 +22,15 @@ export class ChooseCityComponent implements OnInit {
   }
   ngOnInit() {
     console.log('城市数据个数==============' + this.hotCityList.length);
+    this.getCityData();
+
+  }
+
+  onItemClick(item) {
+    console.log(item);
   }
 
   ionViewDidEnter() {
-    this.getCityData();
   }
   // size: 一行分为size列  原理  : 假设size=2，则【1,2,3,4,5,6,7,8,9】=>【1，2】,【3,4】,【5，6】，【7，8】，【9】
   getRowListByGridList(size) {
