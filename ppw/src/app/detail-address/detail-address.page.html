@@ -28,8 +28,8 @@
     </ion-item>
 
     <ion-item detail class="commonCustomItem">
-      <ListItem Picker style="padding-left:3px; width: 80%;" [data]="zoneList" [extra]="zoneStr" [appendToBody]="true"
-        [cascade]="true" [mask]="false" [(ngModel)]="value1" [cols]="2" (ngModelChange)="onOk1($event)"
+      <ListItem Picker style="padding-left:3px; width: 100%;" [data]="zoneList" [extra]="zoneStr" [appendToBody]="true"
+        [cascade]="true" [mask]="false" [(ngModel)]="valueList" [cols]="2" (ngModelChange)="checkZone($event)"
         (onDismiss)="onDismiss1()">
         <p>区域</p>
       </ListItem>

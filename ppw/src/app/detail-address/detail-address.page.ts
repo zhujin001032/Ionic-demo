@@ -17,11 +17,48 @@ import { fromEventPattern, from, config } from 'rxjs';
 })
 export class DetailAddressPage implements OnInit {
 
-  public zoneList = [{ label: '深圳市', code: '4403', children: [{ label: '南山区', code: '440301' }, { label: '南油', code: '440302' }] },
-  { label: '北京市', code: '11', children: [{ label: '海定区', code: '1101' }, { label: '崇文区', code: '1102' }] }];
+  public zoneList = [
+    {
+      label: '深圳市', code: '4403',
+      children: [
+        { label: '南山区', code: '440301' },
+        { label: '南油', code: '440302' }
+      ]
+    },
+    {
+      label: '北京市', code: '11',
+      children: [
+        { label: '海定区', code: '1101' },
+        { label: '崇文区', code: '1102' }
+      ]
+    },
+    {
+      label: '上海', code: '12',
+      children: [
+        { label: '海定区1', code: '1101' },
+        { label: '崇文区2', code: '1102' },
+        { label: '海定区3', code: '1101' },
+        { label: '崇文区4', code: '1102' },
+        { label: '海定区5', code: '1101' },
+        { label: '崇文区6', code: '1102' }
+      ]
+    }
+    , {
+      label: '天津', code: '13',
+      children: [
+        { label: '天津区1', code: '1101' },
+        { label: '天津区2', code: '1102' },
+        { label: '天津区3', code: '1101' },
+        { label: '天津区4', code: '1102' },
+        { label: '天津区5', code: '1101' },
+        { label: '天津区6', code: '1102' },
+        { label: '天津区7', code: '1101' },
+        { label: '天津区8', code: '1102' }
+      ]
+    }
+  ];
 
-  public value1 = [{ label: '深圳市', code: '4403', children: [{ label: '南山区', code: '440301' }, { label: '南油', code: '440302' }] },
-  { label: '北京市', code: '11', children: [{ label: '海定区', code: '1101' }, { label: '崇文区', code: '1102' }] }];
+  public valueList = [];
 
   simpleColumns: { name: string; options: { text: string; value: string; }[]; }[];
 
@@ -36,13 +73,12 @@ export class DetailAddressPage implements OnInit {
     private router: Router,
     public modalController: ModalController,
     public pickerCtrl: PickerController,
-    private _picker: Picker
   ) {
 
     this.city = '深圳';
   }
 
-  onOk1(result) {
+  checkZone(result) {
     this.zoneStr = this.getResult(result);
     console.log('----------------' + this.zoneStr);
   }
