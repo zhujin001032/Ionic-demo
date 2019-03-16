@@ -123,7 +123,7 @@ export class DetailAddressPage implements OnInit {
   }
 
   chooseDetailAddressFromMap() {
-    console.log('选择地址：');
+    console.log('push 选择地址：');
     this.router.navigate(['choose-address']);
   }
 

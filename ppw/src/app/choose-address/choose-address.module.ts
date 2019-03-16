@@ -1,9 +1,9 @@
+import { TagAddressListComponent } from './../choose-address/tag-address-list/tag-address-list.component';
 import { SearchAddressComponent } from './search-address/search-address.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
-
 import { IonicModule } from '@ionic/angular';
 
 import { ChooseAddressPage } from './choose-address.page';
@@ -23,7 +23,7 @@ const routes: Routes = [
     RouterModule.forChild(routes)
   ],
   exports: [ChooseAddressPage],
-  declarations: [ChooseAddressPage, SearchAddressComponent],
+  declarations: [ChooseAddressPage, SearchAddressComponent, TagAddressListComponent],
   entryComponents: [SearchAddressComponent]
 
 })

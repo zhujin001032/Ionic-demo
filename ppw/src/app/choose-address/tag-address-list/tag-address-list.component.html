@@ -1,0 +1,12 @@
+<section>
+  <ion-list>
+    <ion-item *ngFor="let item of tagData ; let i=index" (click)="onSelectAddress(item)">
+      <img *ngIf="i == 0" src="/assets/icon/circle.png" style="width:14px;height:14px;margin-right: 10px;">
+      <img *ngIf="i != 0" src="/assets/icon/circle2.png" style="width:14px;height:14px;margin-right: 10px;">
+      <ion-label>
+        <h3 style="color:#27282E;font-size:16px;">{{item.title}}</h3>
+        <p><span class="price" style="color:#858894;font-size:12px;">{{item.address}}</span></p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</section>
