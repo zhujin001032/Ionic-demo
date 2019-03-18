@@ -1,5 +1,5 @@
 <section>
-  <ion-list>
+  <ion-list style="margin:0px; "> 
     <ion-item *ngFor="let item of tagData ; let i=index" (click)="onSelectAddress(item)">
       <img *ngIf="i == 0" src="/assets/icon/circle.png" style="width:14px;height:14px;margin-right: 10px;">
       <img *ngIf="i != 0" src="/assets/icon/circle2.png" style="width:14px;height:14px;margin-right: 10px;">
