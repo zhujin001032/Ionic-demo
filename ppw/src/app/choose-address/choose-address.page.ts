@@ -1,3 +1,4 @@
+import { CityService } from './../services/city.service';
 import { TagAddressListComponent } from './tag-address-list/tag-address-list.component';
 import { SearchAddressComponent } from './search-address/search-address.component';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
@@ -29,13 +30,18 @@ export class ChooseAddressPage implements OnInit {
   constructor(
     private location: Location,
     public modalController: ModalController,
-    private navController: NavController
+    private navController: NavController,
+    public cityService: CityService,
+
   ) {
     this.mapId = 'mapId' + new Date().getTime();
   }
-  // 自定义事件
-  selectAddress(address) {
-    alert('father' + address.title);
+
+  // 5.父组件接收到数据会调用自己的 runParent 方法，这个时候就能拿到子组件的数据
+  selectAddress(addressObj) {
+    console.log('子组件传回来的address', addressObj);
+    this.cityService.addressData.address = addressObj.address;
+    this.navController.back();
   }
   ngOnInit() {
     this.clicked = false;
@@ -132,10 +138,7 @@ uid: "fa7da3e89345e66242d63e4b"
   }
 
   refreshMapList(data: any) {
-
     console.log(data);
-
-
   }
 
   changeAddress() {

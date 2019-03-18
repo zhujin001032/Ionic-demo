@@ -37,4 +37,5 @@ export class CityService {
   setAddressData(data) {
     this.addressData = data;
   }
+
 }

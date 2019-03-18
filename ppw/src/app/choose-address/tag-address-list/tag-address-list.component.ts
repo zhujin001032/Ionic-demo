@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, Output } from '@angular/core';
-import { EventEmitter } from 'events';
+//1. 子组件引入 Output 和 EventEmitter
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-tag-address-list',
@@ -9,18 +9,19 @@ import { EventEmitter } from 'events';
 export class TagAddressListComponent implements OnInit {
   //父级传下来的
   @Input() tagData: any;
-  //父组件的 事件 onAddress 初始化
-  // @Output() onAddress;
+  //2.子组件中实例化 EventEmitter 父组件的 事件 outerAddress 初始化
+  @Output() outerAddress = new EventEmitter();
   constructor() {
 
   }
 
   ngOnInit() {
-    // this.onAddress = new EventEmitter();
+
   }
 
   onSelectAddress(address) {
-    // this.onAddress.emit(address);
+    //3. 子组件通过 EventEmitter 对象 outerAddress 实例广播数据
+    this.outerAddress.emit(address);
     console.log('choose address:', address.title);
   }
 }
