@@ -1,3 +1,4 @@
+import { CityService } from './../services/city.service';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
@@ -63,7 +64,6 @@ export class DetailAddressPage implements OnInit {
   simpleColumns: { name: string; options: { text: string; value: string; }[]; }[];
 
   public city = '';
-  public zone = '';
   public detail = '';
   zoneStr = '请选择';
   value = [];
@@ -73,13 +73,23 @@ export class DetailAddressPage implements OnInit {
     private router: Router,
     public modalController: ModalController,
     public pickerCtrl: PickerController,
+    public cityService: CityService,
   ) {
 
-    this.city = '深圳';
+    this.city = this.cityService.addressData.cityName;
+    this.detail = this.cityService.addressData.address;
+
+    if (this.cityService.addressData.address) {
+      this.cityService.addressData.address;
+    }
+    if (this.cityService.addressData.districtName) {
+      this.zoneStr = this.cityService.addressData.districtName;
+    }
   }
 
   checkZone(result) {
     this.zoneStr = this.getResult(result);
+    this.cityService.addressData.districtName = this.zoneStr;
     console.log('----------------' + this.zoneStr);
   }
 
@@ -112,7 +122,7 @@ export class DetailAddressPage implements OnInit {
     console.log('选择城市：');
     const modal = await this.modalController.create({
       component: ChooseCityComponent,
-      componentProps: { value: '来福士' }
+      componentProps: { value: this.city }
     });
     await modal.present();
 

@@ -7,6 +7,19 @@ import { Observable } from 'rxjs';
 })
 export class CityService {
 
+  public addressData = {
+    cityCode: 4403,
+    districtCode: Number,
+    cityName: "深圳",
+    districtName: "",
+    address: "",
+    doorNum: "",
+    fullAddress: "",
+    lat: Number,
+    lng: Number,
+
+  }
+
   constructor(private httpService: Http) { }
 
   getNetWorkDataDemo(): Observable<Response> {
@@ -15,5 +28,13 @@ export class CityService {
 
   getLocalCityData() {
     return this.httpService.get('assets/json/district.json');
+  }
+
+  getAddressData() {
+    return this.addressData;
+  }
+
+  setAddressData(data) {
+    this.addressData = data;
   }
 }

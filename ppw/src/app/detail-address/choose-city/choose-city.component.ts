@@ -11,6 +11,13 @@ import { error } from '@angular/compiler/src/util';
 })
 export class ChooseCityComponent implements OnInit {
   // 城市数据
+  /**
+   * 当前定位城市
+    当前开启定位权限时，显示定位到的城市
+    当前未开启定位权限但已选择过城市时，显示已选择的城市
+    当前未开启定位权限且未选择过城市时，显示“深圳”
+   * */
+  city: any;
   listdata: any;
   hotCityList: any;
   rowList: any;
