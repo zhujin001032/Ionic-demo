@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-button color="primary" href="/tabs/tab2">
-        <ion-icon name="arrow-back"></ion-icon>
+        <img src="/assets/icon/nav_icon_back@2x.png" class="nav-icon-size">
       </ion-button>
     </ion-buttons>
 
@@ -17,44 +17,34 @@
 
 <ion-content>
 
-  <ion-list>
+  <ion-list lines="none" class="address-list">
     <ion-item detail (click)="chooseCity()">
-      <ion-col size="4" class="address-item-title">
-        <ion-label>城市</ion-label>
-      </ion-col>
-      <ion-col size="8" class="address-item-content">
-        <ion-label> {{city}}</ion-label>
-      </ion-col>
+      <ion-label>城市</ion-label>
+      <ion-input readonly unselectable="on"> {{city}}</ion-input>
     </ion-item>
+    <hr>
 
     <ion-item detail class="commonCustomItem">
-      <ListItem Picker style="padding-left:3px; width: 100%;" [data]="zoneList" [extra]="zoneStr" [appendToBody]="true"
-        [cascade]="true" [mask]="false" [(ngModel)]="valueList" [cols]="2" (ngModelChange)="checkZone($event)"
-        (onDismiss)="onDismiss1()">
+      <ListItem Picker style="padding-left:3px; width: 100%; height: 58px;" [data]="zoneList" [extra]="zoneStr"
+        [appendToBody]="true" [cascade]="true" [mask]="false" [(ngModel)]="valueList" [cols]="2"
+        (ngModelChange)="checkZone($event)" (onDismiss)="onDismiss1()">
         <p>区域</p>
       </ListItem>
     </ion-item>
-
-    <ion-item class="item-text-wrap" detail="false" lines="inset" (click)="chooseDetailAddressFromMap()">
-      <ion-col size="4" class="address-item-title">
-        <ion-label>详细地址</ion-label>
-      </ion-col>
-      <ion-col class="address-item-content">
-        <ion-label> {{detail}}</ion-label>
-      </ion-col>
-      <ion-col size="2">
-        <ion-icon name="pin" slot="end"></ion-icon>
-      </ion-col>
+    <hr>
+    <ion-item detail="false" (click)="chooseDetailAddressFromMap()">
+      <ion-label>详细地址</ion-label>
+      <ion-input readonly unselectable="on"> {{detail}}</ion-input>
+      <img src="/assets/icon/release_icon_location@2x.png" class="location-icon">
     </ion-item>
+    <hr>
+    <ion-item>
+      <ion-label>门牌号</ion-label>
+      <ion-input placeholder="请填写" type="text" clearInput="true"></ion-input>
 
-    <ion-item lines="none">
-      <ion-col size="4" class="address-item-title">
-        <ion-label>门牌号</ion-label>
-      </ion-col>
-      <ion-col size="8" class="address-item-content">
-        <ion-input placeholder="请填写" type="text" clearInput="true"></ion-input>
-      </ion-col>
     </ion-item>
   </ion-list>
+
+
 
 </ion-content>

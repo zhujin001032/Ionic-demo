@@ -1,14 +1,46 @@
 // .bg-color{
 //     background-color: rgb(124, 105, 105);
 // }
-.address-item-title{
-    padding-left: 0%;
-}
+
+
+
 .address-sure-button{
-    font-family: PingFang-SC-Regular;
     font-size: 16px;
     color: #FF6314;
     letter-spacing: 0;
-    text-align: right;
+    text-align: left;
     line-height: 16px;
+    
+}
+ion-item {
+
+    ion-label {
+    margin-left: 4px;
+    padding-left: 0px;
+    padding-right: 4px;
+    width:30%;
+    
+}
+}
+ion-item {
+    ion-input{
+    padding-left: 0%;
+    padding-bottom: 5px;
+    padding-right: 0px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 10px;
+    margin-bottom: 10px
+}
+}
+
+hr{
+    border-top: 1px solid #ebebed;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.location-icon{
+    width: 12px;
+    height: 16px;
+    margin-right: 0.45rem;
 }

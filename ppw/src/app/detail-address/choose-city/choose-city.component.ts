@@ -28,6 +28,7 @@ export class ChooseCityComponent implements OnInit {
     this.listdata = [];
   }
   ngOnInit() {
+    this.city = this.cityService.getAddressData
     console.log('城市数据个数==============' + this.hotCityList.length);
     this.getCityData();
 
@@ -74,4 +75,7 @@ export class ChooseCityComponent implements OnInit {
     this.navParams.data.modal.dismiss();
   }
 
+  onCurrentCityClick(city) {
+
+  }
 }

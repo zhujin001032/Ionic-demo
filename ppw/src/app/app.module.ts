@@ -15,7 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(),
+  imports: [BrowserModule, IonicModule.forRoot({ mode: 'ios' }),
     AppRoutingModule, HttpModule, NgZorroAntdMobileModule, BrowserAnimationsModule, FormsModule, HttpClientModule,
   ],
   providers: [

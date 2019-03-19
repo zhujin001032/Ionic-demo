@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
+
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -31,11 +32,14 @@ export class CityService {
   }
 
   getAddressData() {
+    this.addressData = JSON.parse(localStorage.getItem("kAddress"));
     return this.addressData;
   }
 
   setAddressData(data) {
-    this.addressData = data;
+    //将数据写入localStorage
+    localStorage.setItem("kAddress", JSON.stringify(data));
   }
-
 }
+
+
