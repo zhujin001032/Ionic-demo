@@ -20,27 +20,38 @@
   <ion-list lines="none" class="address-list">
     <ion-item detail (click)="chooseCity()">
       <ion-label>城市</ion-label>
-      <ion-input readonly unselectable="on"> {{city}}</ion-input>
+      <span> {{city}}</span>
     </ion-item>
     <hr>
 
-    <ion-item detail class="commonCustomItem">
+    <ion-item>
       <ListItem Picker style="padding-left:3px; width: 100%; height: 58px;" [data]="zoneList" [extra]="zoneStr"
         [appendToBody]="true" [cascade]="true" [mask]="false" [(ngModel)]="valueList" [cols]="2"
         (ngModelChange)="checkZone($event)" (onDismiss)="onDismiss1()">
-        <p>区域</p>
+        <ion-label>区域</ion-label>
       </ListItem>
     </ion-item>
     <hr>
     <ion-item detail="false" (click)="chooseDetailAddressFromMap()">
       <ion-label>详细地址</ion-label>
-      <ion-input readonly unselectable="on"> {{detail}}</ion-input>
+      <span *ngIf="!detail" style="color:lightgray">点击选择具体地址</span>
+      <span> {{detail}}</span>
       <img src="/assets/icon/release_icon_location@2x.png" class="location-icon">
     </ion-item>
     <hr>
     <ion-item>
-      <ion-label>门牌号</ion-label>
-      <ion-input placeholder="请填写" type="text" clearInput="true"></ion-input>
+      <!-- <ion-label>门牌号</ion-label>
+      <div class="input">
+        <ion-input placeholder="请填写" type="text" clearInput="true"></ion-input>
+      </div> -->
+      <div class="item">
+        <div class="title">
+          门牌号
+        </div>
+        <ion-input placeholder="请填写" type="text" clearInput="true"></ion-input>
+      </div>
+
+
 
     </ion-item>
   </ion-list>

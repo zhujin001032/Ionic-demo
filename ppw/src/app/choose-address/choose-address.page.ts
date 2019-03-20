@@ -1,9 +1,12 @@
-import { CityService } from './../services/city.service';
-import { TagAddressListComponent } from './tag-address-list/tag-address-list.component';
-import { SearchAddressComponent } from './search-address/search-address.component';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Location } from '@angular/common';
+
 import { ModalController, NavController } from '@ionic/angular';
+
+import { CityService } from './../services/city.service';
+
+import { SearchAddressComponent } from './search-address/search-address.component';
+import { TagAddressListComponent } from './tag-address-list/tag-address-list.component';
 
 
 declare var AMap;
@@ -82,7 +85,7 @@ uid: "fa7da3e89345e66242d63e4b"
     await modal.present();
   }
 
-  //百度地图
+  // 百度地图
   ngAfterViewInit() {
     let that = this;
     setTimeout(function () {

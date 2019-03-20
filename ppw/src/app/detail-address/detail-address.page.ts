@@ -1,14 +1,17 @@
-import { CityService } from './../services/city.service';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+
 import { ModalController } from '@ionic/angular';
-import { ChooseCityComponent } from './choose-city/choose-city.component';
 import { PickerController } from '@ionic/angular';
-// 级联picker
-import { Picker } from 'ng-zorro-antd-mobile';
 
 import { fromEventPattern, from, config } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+
+import { Picker } from 'ng-zorro-antd-mobile';
+
+import { CityService } from './../services/city.service';
+
+import { ChooseCityComponent } from './choose-city/choose-city.component';
 @Component({
   selector: 'app-detail-address',
   templateUrl: './detail-address.page.html',
@@ -76,21 +79,24 @@ export class DetailAddressPage implements OnInit {
     public cityService: CityService,
   ) {
 
-    this.city = this.cityService.addressData.cityName;
-    this.detail = this.cityService.addressData.address;
-
-    if (this.cityService.addressData.address) {
-      this.cityService.addressData.address;
+    if (this.cityService.getAddressData().cityName) {
+      this.city = this.cityService.getAddressData().cityName;
     }
-    if (this.cityService.addressData.districtName) {
-      this.zoneStr = this.cityService.addressData.districtName;
+
+    if (this.cityService.getAddressData().address) {
+      this.detail = this.cityService.getAddressData().address;
+    }
+    if (this.cityService.getAddressData().districtName) {
+      this.zoneStr = this.cityService.getAddressData().districtName;
     }
   }
 
   checkZone(result) {
     this.zoneStr = this.getResult(result);
-    this.cityService.addressData.districtName = this.zoneStr;
     console.log('----------------' + this.zoneStr);
+    // save
+    this.cityService.getAddressData().districtName = this.zoneStr;
+    this.cityService.setAddressData(this.cityService.addressData);
   }
 
   getResult(result) {
@@ -113,7 +119,9 @@ export class DetailAddressPage implements OnInit {
     });
     return value;
   }
-  ngOnInit() { }
+  ngOnInit() {
+
+  }
   sureAddress() {
     console.log('地址是：');
   }
@@ -125,6 +133,12 @@ export class DetailAddressPage implements OnInit {
       componentProps: { value: this.city }
     });
     await modal.present();
+    // 模态返回 数据
+    const { data } = await modal.onDidDismiss();
+    console.log(data);
+    if (data) {
+      this.city = data['res'].name;
+    }
 
   }
 

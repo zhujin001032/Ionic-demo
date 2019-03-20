@@ -1,8 +1,10 @@
 
-import { CityService } from './../../services/city.service';
 import { Component, OnInit } from '@angular/core';
-import { NavParams } from '@ionic/angular';
 import { error } from '@angular/compiler/src/util';
+
+import { NavParams } from '@ionic/angular';
+
+import { CityService } from './../../services/city.service';
 
 @Component({
   selector: 'app-choose-city',
@@ -16,20 +18,33 @@ export class ChooseCityComponent implements OnInit {
     当前开启定位权限时，显示定位到的城市
     当前未开启定位权限但已选择过城市时，显示已选择的城市
     当前未开启定位权限且未选择过城市时，显示“深圳”
+    {
+		"code": 15020418,
+		"name": "自由路",
+		"status": 1,
+		"pinyin": "",
+		"py": "btzyl",
+		"city_no": "99",
+		"order_num": 99
+	},
    * */
+  locationCity: any;
   city: any;
   listdata: any;
   hotCityList: any;
   rowList: any;
-  // 
+
   constructor(public navParams: NavParams, private cityService: CityService) {
     this.hotCityList = [{ name: '深圳' }, { name: '西安' }, { name: '杭州' }, { name: '重庆' }, { name: '上海' }, { name: '北京' }];
     this.rowList = [];
     this.listdata = [];
+    this.city = { name: '' };
   }
   ngOnInit() {
-    this.city = this.cityService.getAddressData
-    console.log('城市数据个数==============' + this.hotCityList.length);
+    if (this.cityService.getAddressData()) {
+      this.city.name = this.cityService.getAddressData().cityName;
+    }
+
     this.getCityData();
 
   }
@@ -40,9 +55,9 @@ export class ChooseCityComponent implements OnInit {
 
   ionViewDidEnter() {
   }
-  // size: 一行分为size列  原理  : 假设size=2，则【1,2,3,4,5,6,7,8,9】=>【1，2】,【3,4】,【5，6】，【7，8】，【9】
+
+  // 热门城市
   getRowListByGridList(size) {
-    console.log('城市数据个数==============1111' + this.hotCityList.length);
     if (this.rowList.length > 1) {
       return this.rowList;
     }
@@ -55,7 +70,7 @@ export class ChooseCityComponent implements OnInit {
   }
   getCityData() {
     this.cityService.getLocalCityData().subscribe(res => {
-      let tempList = res.json();
+      const tempList = res.json();
       // let tempList: Array = Array(tempObj._body);
       for (let i = 0; i < tempList.length; i++) {
         if (tempList[i].code > 999 && tempList[i].code < 10000) {
@@ -75,7 +90,14 @@ export class ChooseCityComponent implements OnInit {
     this.navParams.data.modal.dismiss();
   }
 
-  onCurrentCityClick(city) {
-
+  onCurrentCityClick(city: any) {
+    console.log('当前选择的城市' + city.name);
+    // this.city = city;
+    // 保存数据到全局
+    const addressData = this.cityService.getAddressData();
+    addressData.cityName = city.name;
+    this.cityService.setAddressData(addressData);
+    // 返回参数
+    this.navParams.data.modal.dismiss({ 'res': city });
   }
 }

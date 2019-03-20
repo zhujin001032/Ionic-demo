@@ -8,20 +8,24 @@ import { Observable } from 'rxjs';
 })
 export class CityService {
 
-  public addressData = {
+  public addressData: any = {
     cityCode: 4403,
     districtCode: Number,
-    cityName: "深圳",
-    districtName: "",
-    address: "",
-    doorNum: "",
-    fullAddress: "",
+    cityName: '深圳',
+    districtName: '',
+    address: '',
+    doorNum: '',
+    fullAddress: '',
     lat: Number,
     lng: Number,
 
-  }
+  };
 
-  constructor(private httpService: Http) { }
+  constructor(private httpService: Http) {
+    if (!localStorage.getItem('kAddress')) {
+      this.setAddressData(this.addressData);
+    }
+  }
 
   getNetWorkDataDemo(): Observable<Response> {
     return this.httpService.request('http://jsonplaceholder.typicode.com/users');
@@ -31,14 +35,14 @@ export class CityService {
     return this.httpService.get('assets/json/district.json');
   }
 
-  getAddressData() {
-    this.addressData = JSON.parse(localStorage.getItem("kAddress"));
+  public getAddressData() {
+    this.addressData = JSON.parse(localStorage.getItem('kAddress'));
     return this.addressData;
   }
 
-  setAddressData(data) {
-    //将数据写入localStorage
-    localStorage.setItem("kAddress", JSON.stringify(data));
+  public setAddressData(data) {
+    // 将数据写入localStorage
+    localStorage.setItem('kAddress', JSON.stringify(data));
   }
 }
 
