@@ -12,7 +12,8 @@
 
 <ion-content>
   <div>
-    <ion-searchbar show-cancel-button="true" value={{keyWord}} placeholder="请输入您的地址"></ion-searchbar>
+    <ion-searchbar show-cancel-button="true" [(ngModel)]="keyWord" placeholder="请输入您的地址" (keydown)="keydown()">
+    </ion-searchbar>
   </div>
   <ion-list *ngFor="let item of addressList">
     <ion-item>

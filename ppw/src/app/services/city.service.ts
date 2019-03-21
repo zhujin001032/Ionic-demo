@@ -1,7 +1,10 @@
+import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Response, RequestOptionsArgs } from '@angular/http';
 
 import { Observable } from 'rxjs';
+
+import { SearchAddressComponent } from './../choose-address/search-address/search-address.component';
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +38,13 @@ export class CityService {
     return this.httpService.get('assets/json/district.json');
   }
 
+  searchAddress(region: String, keyWord: string): Observable<Response> {
+    const api = 'http://api.map.baidu.com/place/v2/search?query=keyWord&region=region&output=json&ak=OU0ejFYGO1a2EMwLlcBQ7iklFWEyA0io';
+    const header = new Headers();
+    header.append('Access-Control-Allow-Origin', '*');
+
+    return this.httpService.get(api);
+  }
   public getAddressData() {
     this.addressData = JSON.parse(localStorage.getItem('kAddress'));
     return this.addressData;

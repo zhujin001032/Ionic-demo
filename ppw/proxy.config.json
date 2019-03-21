@@ -1,0 +1,11 @@
+{
+    "/place/v2/search": {
+        "target": "http://api.map.baidu.com/place/v2/search",
+        "secure": false,
+        "logLevel": "debug",
+        "changeOrigin": true,
+        "pathRewrite": {
+            "^/place/v2/search": ""
+        }
+    }
+}

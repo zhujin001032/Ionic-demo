@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { error } from '@angular/compiler/src/util';
 
-import { NavParams } from '@ionic/angular';
+import { NavParams, ModalController } from '@ionic/angular';
 
 import { CityService } from './../../services/city.service';
 
@@ -34,7 +34,7 @@ export class ChooseCityComponent implements OnInit {
   hotCityList: any;
   rowList: any;
 
-  constructor(public navParams: NavParams, private cityService: CityService) {
+  constructor(public navParams: NavParams, private cityService: CityService, private modalCtrl: ModalController, ) {
     this.hotCityList = [{ name: '深圳' }, { name: '西安' }, { name: '杭州' }, { name: '重庆' }, { name: '上海' }, { name: '北京' }];
     this.rowList = [];
     this.listdata = [];
@@ -76,7 +76,6 @@ export class ChooseCityComponent implements OnInit {
         if (tempList[i].code > 999 && tempList[i].code < 10000) {
           this.listdata.push(tempList[i]);
         }
-
       }
 
       console.log('cityData----------------->>', this.listdata);
@@ -98,6 +97,7 @@ export class ChooseCityComponent implements OnInit {
     addressData.cityName = city.name;
     this.cityService.setAddressData(addressData);
     // 返回参数
-    this.navParams.data.modal.dismiss({ 'res': city });
+    // this.navParams.data.modal.dismiss({ 'res': city });
+    this.modalCtrl.dismiss({ 'res': city });
   }
 }

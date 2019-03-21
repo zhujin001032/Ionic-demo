@@ -65,10 +65,11 @@ export class DetailAddressPage implements OnInit {
   public valueList = [];
 
   simpleColumns: { name: string; options: { text: string; value: string; }[]; }[];
-
-  public city = '';
-  public detail = '';
-  zoneStr = '请选择';
+  public addressData: any;
+  // public city = '';
+  // public detail = '';
+  // public doorNum = '';
+  // zoneStr = '请选择';
   value = [];
 
   constructor(
@@ -78,25 +79,25 @@ export class DetailAddressPage implements OnInit {
     public pickerCtrl: PickerController,
     public cityService: CityService,
   ) {
-
-    if (this.cityService.getAddressData().cityName) {
-      this.city = this.cityService.getAddressData().cityName;
-    }
-
-    if (this.cityService.getAddressData().address) {
-      this.detail = this.cityService.getAddressData().address;
-    }
-    if (this.cityService.getAddressData().districtName) {
-      this.zoneStr = this.cityService.getAddressData().districtName;
-    }
+    this.addressData = this.cityService.getAddressData();
+    // if (this.cityService.getAddressData().cityName) {
+    //   this.city = this.cityService.getAddressData().cityName;
+    // }
+    // if (this.cityService.getAddressData().address) {
+    //   this.detail = this.cityService.getAddressData().address;
+    // }
+    // if (this.cityService.getAddressData().districtName) {
+    //   this.zoneStr = this.cityService.getAddressData().districtName;
+    // }
+    // if (this.cityService.getAddressData().doorNum) {
+    //   this.doorNum = this.cityService.getAddressData().doorNum;
+    // }
   }
 
   checkZone(result) {
-    this.zoneStr = this.getResult(result);
-    console.log('----------------' + this.zoneStr);
-    // save
-    this.cityService.getAddressData().districtName = this.zoneStr;
-    this.cityService.setAddressData(this.cityService.addressData);
+    this.addressData.districtName = this.getResult(result);
+    console.log('----------------' + this.addressData.districtName);
+    // this.saveAddress();
   }
 
   getResult(result) {
@@ -119,29 +120,37 @@ export class DetailAddressPage implements OnInit {
     });
     return value;
   }
+
   ngOnInit() {
 
   }
   sureAddress() {
-    console.log('地址是：');
+    this.saveAddress();
+    console.log('地址是：', this.addressData);
+
   }
 
   async chooseCity() {
     console.log('选择城市：');
     const modal = await this.modalController.create({
       component: ChooseCityComponent,
-      componentProps: { value: this.city }
+      componentProps: { value: this.addressData.city }
     });
     await modal.present();
     // 模态返回 数据
     const { data } = await modal.onDidDismiss();
     console.log(data);
     if (data) {
-      this.city = data['res'].name;
+      this.addressData.city = data['res'].name;
+      // this.saveAddress();
     }
 
   }
 
+  onchange() {
+    console.log('change doorNum', this.addressData.doorNum);
+    // this.saveAddress();
+  }
   onDismiss1() {
     console.log('cancel');
   }
@@ -151,5 +160,7 @@ export class DetailAddressPage implements OnInit {
     this.router.navigate(['choose-address']);
   }
 
-
+  saveAddress() {
+    this.cityService.setAddressData(this.addressData);
+  }
 }

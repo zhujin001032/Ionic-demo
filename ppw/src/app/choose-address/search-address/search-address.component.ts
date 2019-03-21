@@ -1,6 +1,9 @@
-import { ModalController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
+
+import { ModalController } from '@ionic/angular';
 import { NavParams } from '@ionic/angular';
+
+import { CityService } from './../../services/city.service';
 @Component({
   selector: 'app-search-address',
   templateUrl: './search-address.component.html',
@@ -8,13 +11,19 @@ import { NavParams } from '@ionic/angular';
 })
 export class SearchAddressComponent implements OnInit {
   public keyWord = '';
+  public cityName = '深圳';
   public addressList = [];
 
   // 解析传递的参数
-  constructor(public navParams: NavParams) {
+  constructor(public navParams: NavParams, public cityService: CityService) {
     this.keyWord = navParams.data['value'];
   }
-
+  keydown() {
+    console.log(this.keyWord);
+    this.cityService.searchAddress(this.cityName, this.keyWord).subscribe((res) => {
+      console.log(res.json);
+    });
+  }
   demoData() {
 
     for (let i = 0; i < 10; i++) {
@@ -24,7 +33,7 @@ export class SearchAddressComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.demoData();
+    // this.demoData();
   }
 
   async closeSearchPage() {
