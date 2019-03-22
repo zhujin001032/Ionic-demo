@@ -1,3 +1,4 @@
+import { ChooseAddressComponent } from './choose-address/choose-address.component';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
@@ -12,6 +13,7 @@ import { Picker } from 'ng-zorro-antd-mobile';
 import { CityService } from './../services/city.service';
 
 import { ChooseCityComponent } from './choose-city/choose-city.component';
+
 @Component({
   selector: 'app-detail-address',
   templateUrl: './detail-address.page.html',
@@ -79,19 +81,7 @@ export class DetailAddressPage implements OnInit {
     public pickerCtrl: PickerController,
     public cityService: CityService,
   ) {
-    this.addressData = this.cityService.getAddressData();
-    // if (this.cityService.getAddressData().cityName) {
-    //   this.city = this.cityService.getAddressData().cityName;
-    // }
-    // if (this.cityService.getAddressData().address) {
-    //   this.detail = this.cityService.getAddressData().address;
-    // }
-    // if (this.cityService.getAddressData().districtName) {
-    //   this.zoneStr = this.cityService.getAddressData().districtName;
-    // }
-    // if (this.cityService.getAddressData().doorNum) {
-    //   this.doorNum = this.cityService.getAddressData().doorNum;
-    // }
+
   }
 
   checkZone(result) {
@@ -122,11 +112,12 @@ export class DetailAddressPage implements OnInit {
   }
 
   ngOnInit() {
-
+    this.addressData = this.cityService.getAddressData();
+    console.log('初始化地址是：', this.addressData);
   }
   sureAddress() {
     this.saveAddress();
-    console.log('地址是：', this.addressData);
+    console.log('确认地址是：', this.addressData);
 
   }
 
@@ -142,7 +133,6 @@ export class DetailAddressPage implements OnInit {
     console.log(data);
     if (data) {
       this.addressData.city = data['res'].name;
-      // this.saveAddress();
     }
 
   }
@@ -155,9 +145,23 @@ export class DetailAddressPage implements OnInit {
     console.log('cancel');
   }
 
-  chooseDetailAddressFromMap() {
-    console.log('push 选择地址：');
-    this.router.navigate(['choose-address']);
+  async chooseDetailAddressFromMap() {
+    console.log('选择地址');
+    const modal = await this.modalController.create({
+      component: ChooseAddressComponent,
+      componentProps: { value: this.addressData.city }
+    });
+    await modal.present();
+    // 模态返回 数据
+    const { data } = await modal.onDidDismiss();
+    console.log(data);
+    if (data) {
+      console.log('地图选址为：', data['res']);
+      this.addressData = data['res'];
+      console.log('地图选址为：', this.addressData);
+      console.log('地图选址为：', this.cityService.getAddressData());
+
+    }
   }
 
   saveAddress() {

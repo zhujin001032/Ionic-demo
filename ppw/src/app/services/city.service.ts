@@ -4,8 +4,6 @@ import { Http, Response, RequestOptionsArgs } from '@angular/http';
 
 import { Observable } from 'rxjs';
 
-import { SearchAddressComponent } from './../choose-address/search-address/search-address.component';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -39,7 +37,8 @@ export class CityService {
   }
 
   searchAddress(region: String, keyWord: string): Observable<Response> {
-    const api = 'http://api.map.baidu.com/place/v2/search?query=keyWord&region=region&output=json&ak=OU0ejFYGO1a2EMwLlcBQ7iklFWEyA0io';
+    // tslint:disable-next-line:max-line-length
+    const api = 'http://api.map.baidu.com/place/v2/search?query=' + keyWord + '&region=' + region + '&output=json&ak=OU0ejFYGO1a2EMwLlcBQ7iklFWEyA0io';
     const header = new Headers();
     header.append('Access-Control-Allow-Origin', '*');
 

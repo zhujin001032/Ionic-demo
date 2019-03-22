@@ -1,3 +1,6 @@
+import { ChooseAddressComponent } from './choose-address/choose-address.component';
+import { TagAddressListComponent } from './choose-address/tag-address-list/tag-address-list.component';
+
 import { NgZorroAntdMobileModule } from 'ng-zorro-antd-mobile';
 import { ChooseCityComponent } from './choose-city/choose-city.component';
 import { NgModule, Component } from '@angular/core';
@@ -23,8 +26,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     NgZorroAntdMobileModule,
   ],
-  entryComponents: [ChooseCityComponent],
-  declarations: [DetailAddressPage, ChooseCityComponent, FilterPipe]
+  entryComponents: [DetailAddressPage, ChooseCityComponent, ChooseAddressComponent],
+  declarations: [DetailAddressPage, ChooseCityComponent, ChooseAddressComponent, FilterPipe, TagAddressListComponent]
 
 })
 
