@@ -1,12 +1,12 @@
 
-import { TagAddressListComponent } from './../choose-address/tag-address-list/tag-address-list.component';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Location } from '@angular/common';
+
 import { ModalController, NavController } from '@ionic/angular';
 
 import { CityService } from '../../services/city.service';
+import { TagAddressListComponent } from './../choose-address/tag-address-list/tag-address-list.component';
 
-declare var AMap;
 declare var BMap;
 
 @Component({
@@ -16,12 +16,14 @@ declare var BMap;
 })
 export class ChooseAddressComponent implements OnInit {
 
-  @ViewChild('map_container') map_container: ElementRef;
+  public mapId: any;
   public keyWord = '';
   public cityName = '深圳';
   public addressList = [];
   public addressData: any;
-  mapId: any;  //
+  @ViewChild('searchBar') searchBar: ElementRef;
+  @ViewChild('resBg') resBg: ElementRef;
+
   map: any;    // 地图
   tagData: any;
   dataPoint: any;     // 初始的point
@@ -57,7 +59,7 @@ export class ChooseAddressComponent implements OnInit {
         type: 0
         uid: "fa7da3e89345e66242d63e4b"
         __proto__: Object
-     * 
+     *
     */
     // 需要更新对于的code
     this.addressData.address = addressObj.address;
@@ -75,9 +77,58 @@ export class ChooseAddressComponent implements OnInit {
 
   keydown() {
     console.log(this.keyWord);
-    // this.cityService.searchAddress(this.keyWord, this.cityName).subscribe((res) => {
-    //   console.log(res.json);
-    // });
+    this.searchMap();
+    if (this.keyWord.length === 0) {
+      this.addressList = [];
+    } else {
+    }
+  }
+  scroll() {
+    // console.log("打印log日志");实时看下效果
+    console.log('开始滚动！');
+    // this.searchBar.ion - input.blur();
+
+  }
+
+  // $('#input1').focusin(function() {
+  //   setTimeout(function () {
+  //     $('#input1').blur();
+  //   }, 1000);
+  // });
+  // $('#input1').focusout(function() {
+  //   setTimeout(function () {
+  //     $('#input1').focus();
+  //   }, 1000);
+
+  // 搜索地址
+  searchMap() {
+    const that = this;
+    if (this.keyWord === '') {
+
+      setTimeout(function () {
+        that.showMap(that.dataPoint);
+      }, 100);
+      return;
+    }
+
+
+    // 先清除标注
+    that.map.clearOverlays();
+    const local = new BMap.LocalSearch(this.map, {
+      renderOptions: { map: this.map },
+      onSearchComplete: refreshList
+    });
+
+    function refreshList() {
+      if (local.getResults() !== undefined) {
+        that.map.clearOverlays(); // 清除地图上所有覆盖物
+        if (local.getResults().Lq !== undefined) {
+          that.addressList = local.getResults().Lq;
+          console.log(that.addressList);
+        }
+      }
+    }
+    local.search(this.keyWord);
   }
   /* 百度解析的结构
 {
@@ -108,6 +159,7 @@ uid: "fa7da3e89345e66242d63e4b"
     }, 100);
   }
 
+
   showMap(poi) {
     const map = new BMap.Map(this.mapId);
     this.map = map;
@@ -119,13 +171,12 @@ uid: "fa7da3e89345e66242d63e4b"
         lng: e.point.lng,
         lat: e.point.lat
       };
-      const point = new BMap.Point(pointCode.lng, pointCode.lat);
+      const touchPoint = new BMap.Point(pointCode.lng, pointCode.lat);
       // 清除之前标注
       map.clearOverlays();
-      const marker = new BMap.Marker(point);
+      const newMarker = new BMap.Marker(touchPoint);
       map.addOverlay(marker);
       this.pointToAddress(point);
-      console.log(e.point.lng + ', ' + e.point.lat);
       // this.data.point = pointCode;
     });
 
@@ -149,8 +200,7 @@ uid: "fa7da3e89345e66242d63e4b"
     const geo = new BMap.Geocoder();
     geo.getLocation(point, function (obj) {
       that.address = obj.addressComponents.street + obj.addressComponents.streetNumber;
-      console.log(obj.surroundingPois, '----------------------obj');
-      // that.data.address = that.address;
+      console.log('当前经纬度：', obj.surroundingPois);
       that.tagData = obj.surroundingPois;
     });
   }
@@ -159,15 +209,18 @@ uid: "fa7da3e89345e66242d63e4b"
     console.log(data);
   }
 
-  changeAddress() {
-    if (!this.clicked) {
-      const keyword = this.selectCity.name + this.selectDistrict.name + this.selectTradArea.name + this.address;
-      console.log(keyword);
-      // this.addressToPoint(keyword);
-      // this.data.address = this.address;
-    }
-  }
+  // changeAddress() {
+  //   if (!this.clicked) {
+  //     const keyword = this.selectCity.name + this.selectDistrict.name + this.selectTradArea.name + this.address;
+  //     console.log(keyword);
+  //     // this.addressToPoint(keyword);
+  //     // this.data.address = this.address;
+  //   }
+  // }
 
+  selectAddres(addressData) {
+    this.modalController.dismiss({ 'res': addressData });
+  }
 
   doSomething(obj) {
 

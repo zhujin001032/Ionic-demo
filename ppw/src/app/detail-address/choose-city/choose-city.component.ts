@@ -91,13 +91,7 @@ export class ChooseCityComponent implements OnInit {
 
   onCurrentCityClick(city: any) {
     console.log('当前选择的城市' + city.name);
-    // this.city = city;
-    // 保存数据到全局
-    const addressData = this.cityService.getAddressData();
-    addressData.cityName = city.name;
-    this.cityService.setAddressData(addressData);
     // 返回参数
-    // this.navParams.data.modal.dismiss({ 'res': city });
     this.modalCtrl.dismiss({ 'res': city });
   }
 }
