@@ -132,7 +132,7 @@ export class DetailAddressPage implements OnInit {
     const { data } = await modal.onDidDismiss();
     console.log(data);
     if (data) {
-      this.addressData.city = data['res'].name;
+      this.addressData.cityName = data['res'].name;
     }
 
   }
