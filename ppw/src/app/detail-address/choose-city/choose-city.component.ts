@@ -5,6 +5,8 @@ import { error } from '@angular/compiler/src/util';
 import { NavParams, ModalController } from '@ionic/angular';
 
 import { CityService } from './../../services/city.service';
+declare var BMap;
+declare var BMapLib; 
 
 @Component({
   selector: 'app-choose-city',
@@ -49,11 +51,53 @@ export class ChooseCityComponent implements OnInit {
 
   }
 
-  onItemClick(item) {
-    console.log(item);
-  }
+  //沟崽子们
+ionViewWillEnter(){
+    console.log('触发ionViewWillEnter');
+}
+
+
+ionViewWillLeave(){
+    console.log('触发ionViewWillLeave');
+}
+
+ionViewDidLeave(){
+    console.log('触发ionViewDidLeave');
+}
+
+ionViewWillUnload(){
+    console.log('触发ionViewWillUnload');
+}
+
+  ionViewDidLoad() { 
+    console.log('ionViewDidLoad');
+   
+}
 
   ionViewDidEnter() {
+    console.log('ionViewDidEnter');
+    let that = this;
+    this.cityService.getLocation().then((result:any)=>{
+      that.locationCity = result.name; 
+      //使用localStoage存储cityName. 此处不可以使用this.localCityName = cityName; 因为这里的this 指向的是当前的类， 也就是 function(result)这个类
+       localStorage.setItem('currentCity', that.locationCity);
+       console.log('定位到当前城市',that.locationCity);
+    })
+  //   let that = this;
+  //   var myCity = new BMap.LocalCity();
+  //   myCity.get(function (result) {
+  //      that.locationCity = result.name; 
+  //      //使用localStoage存储cityName. 此处不可以使用this.localCityName = cityName; 因为这里的this 指向的是当前的类， 也就是 function(result)这个类
+  //       localStorage.setItem('currentCity', that.locationCity);
+  //       console.log('定位到当前城市',that.locationCity);
+  //       // alert('定位到当前城市'+ that.locationCity);
+  //       return that.locationCity;
+  //  });
+
+   //延迟500毫秒取存储在localStorage中的 cityName 
+   setTimeout(() => {
+       this.locationCity = localStorage.getItem('currentCity'); 
+  }, 500); 
   }
 
   // 热门城市

@@ -89,16 +89,18 @@ export class ChooseAddressComponent implements OnInit {
     // this.searchBar.ion - input.blur();
 
   }
+  getUserLocation(){
+    let that = this;
+    this.cityService.getLocation().then((result:any)=>{
+       console.log('定位到当前城市',result.name,'坐标',result.center);
+       that.showMap(result.center);
+       //TODO: 
+       that.map.centerAndZoom(new BMap.Point(116.404, 39.915), 11); 
+         
 
-  // $('#input1').focusin(function() {
-  //   setTimeout(function () {
-  //     $('#input1').blur();
-  //   }, 1000);
-  // });
-  // $('#input1').focusout(function() {
-  //   setTimeout(function () {
-  //     $('#input1').focus();
-  //   }, 1000);
+    })
+  }
+
 
   // 搜索地址
   searchMap() {
@@ -162,6 +164,9 @@ uid: "fa7da3e89345e66242d63e4b"
 
   showMap(poi) {
     const map = new BMap.Map(this.mapId);
+    map.addControl(new BMap.GeolocationControl('BMAP_ANCHOR_TOP_RIGHT'));
+
+
     this.map = map;
     // let pointcode = {lng: 116.404, lat: 39.915};
     let pointCode = poi;

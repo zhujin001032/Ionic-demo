@@ -2,7 +2,8 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptionsArgs } from '@angular/http';
 import { Observable, observable } from 'rxjs';
-
+import { Geolocation, Geoposition } from '@ionic-native/geolocation/ngx';
+declare var BMap;
 @Injectable({
   providedIn: 'root'
 })
@@ -21,12 +22,60 @@ export class CityService {
 
   };
 
-  constructor(private httpService: Http, public httpJsp:HttpClient) {
+  constructor(private httpService: Http, public httpJsp:HttpClient,private geolocation: Geolocation) {
     if (!localStorage.getItem('kAddress')) {
       this.setAddressData(this.addressData);
     }
   }
 
+  public getLocation(): Promise<Geoposition>{
+    
+    // let watch = this.geolocation.watchPosition();
+    // watch.subscribe((data) => {
+    //  // data can be a set of coordinates, or an error (if an error occurred).
+    //  // data.coords.latitude
+    //  // data.coords.longitude
+    //  if (!isError(data)){
+    //    console.log('get watchPosition', data.coords.longitude --- data.coords.latitude);
+    //  }
+    // });
+
+    return new Promise ((resolve,reject) =>{
+      //插件原生方法对 andriod 网页 无效 google
+      // this.geolocation.getCurrentPosition().then((resp) => {
+      //   console.log('get location', resp.coords.longitude --- resp.coords.latitude);
+      //   resolve(resp);
+  
+      //  }).catch((error) => {
+      //    console.log('Error getting location', error);
+      //  });
+
+//       var geolocation = new BMap.Geolocation();
+//       geolocation.getCurrentPosition(function(r){
+// 	    if(this.getStatus() == BMAP_STATUS_SUCCESS){
+// 		    var mk = new BMap.Marker(r.point);
+// 		    // map.addOverlay(mk);
+// 		    // map.panTo(r.point);
+//         console.log('您的位置：'+r.point.lng+','+r.point.lat);
+// 	}
+// 	else {
+// 		alert('failed'+this.getStatus());
+// 	}        
+// });
+
+      //
+      let that = this;
+      var myCity = new BMap.LocalCity();// IP定位
+      myCity.get(function (result) {
+        
+          console.log('定位到当前城市',result.name);
+          resolve(result);
+          // alert('定位到当前城市'+ that.locationCity);
+          // return result.name;
+     });
+    });
+    
+  }
   getNetWorkDataDemo(): Observable<Response> {
     return this.httpService.request('http://jsonplaceholder.typicode.com/users');
   }
@@ -46,7 +95,7 @@ export class CityService {
       this.httpJsp.jsonp(api,'callback').subscribe(response => {
         console.log(response);  
          resolve(response);
-   });
+          });
     })
 
     

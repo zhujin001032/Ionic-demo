@@ -20,7 +20,13 @@
   <div style="position: fixed;; width: 100%; height: 100%;">
     <div *ngIf="!keyWord || keyWord.length === 0 || keyWord === '' " class="mapBg"
       style="position:relative; width: 100%; height: 100%;">
-      <div id="{{mapId}}" class="mapContainer" style="position:relative; width: 100%; height: 100%;"></div>
+      <div id="{{mapId}}" class="mapContainer" style="position:relative; width: 100%; height: 100%;">
+        <div id="user-location" style="float:right; margin: 20px;">
+          <ion-button color="primary" (click)="getUserLocation()">
+            <img src="/assets/icon/nav_icon_close@2x.png" class="nav-icon-size">
+          </ion-button>
+        </div>
+      </div>
 
       <div>
         <!-- 4.父组件调用子组件的时候，定义接收事件 , outer 就是子组件的 EventEmitter 对象 outer -->

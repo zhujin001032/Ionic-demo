@@ -18,6 +18,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { CityService } from './services/city.service';
+import { Geolocation, Geoposition } from '@ionic-native/geolocation/ngx';
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -29,6 +31,8 @@ import { CityService } from './services/city.service';
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     CityService,
+    Geolocation,
+    
   ],
   bootstrap: [AppComponent]
 })
