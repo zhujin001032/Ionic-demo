@@ -17,10 +17,43 @@
     </ListItem>
   </ion-item> -->
   <List>
-    <ListItem Picker [extra]="name" [arrow]="'horizontal'" [data]="singleArea" [(ngModel)]="value"
-      (ngModelChange)="onOk1($event)">
+    <ListItem Picker [extra]="name" [arrow]="'horizontal'" [data]="singleArea" [(ngModel)]="value" (ngModelChange)="onOk1($event)">
       Single
     </ListItem>
   </List>
+  <ion-button (click)="callPhone()">客服电话</ion-button>
+
+  <ion-list>
+    <ion-header>
+      多选
+    </ion-header>
+    <ion-item>
+      <ion-label>
+        Gender
+      </ion-label>
+      <!-- interface="popover"  alert  action-sheet -->
+      <ion-select placeHolder="Select one" interface="action-sheet">
+        <ion-select-option value="f">男</ion-select-option>
+        <ion-select-option value="m">女</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Hair Color</ion-label>
+      <ion-select multiple='true' value="brown" okText="Okay" cancelText="Dismiss">
+        <ion-select-option value="brown">Brown</ion-select-option>
+        <ion-select-option value="blonde">Blonde</ion-select-option>
+        <ion-select-option value="black">Black</ion-select-option>
+        <ion-select-option value="red">Red</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- 选项是自定义对象 -->
+    <ion-item color="primary">
+      <ion-label> users </ion-label>
+      <ion-select interface="popover" [compareWith]='compareWith'>
+        <ion-select-option *ngFor="let user of users">{{user.first + ' ' + user.last}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
 
 </ion-content>
