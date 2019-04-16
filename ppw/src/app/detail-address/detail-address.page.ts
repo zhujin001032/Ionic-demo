@@ -1,3 +1,4 @@
+import { ChooseAddressComponent } from './choose-address/choose-address.component';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
@@ -11,7 +12,6 @@ import { Picker } from 'ng-zorro-antd-mobile';
 
 import { CityService } from './../services/city.service';
 
-import { ChooseAddressComponent } from './choose-address/choose-address.component';
 import { ChooseCityComponent } from './choose-city/choose-city.component';
 
 @Component({
@@ -21,8 +21,7 @@ import { ChooseCityComponent } from './choose-city/choose-city.component';
   providers: [Picker]
 
 })
-export class DetailAddressPage implements OnInit
-{
+export class DetailAddressPage implements OnInit {
 
   public zoneList = [
     {
@@ -81,24 +80,20 @@ export class DetailAddressPage implements OnInit
     public modalController: ModalController,
     public pickerCtrl: PickerController,
     public cityService: CityService,
-  )
-  {
+  ) {
 
   }
 
-  checkZone(result)
-  {
+  checkZone(result) {
     this.addressData.districtName = this.getResult(result);
     console.log('----------------' + this.addressData.districtName);
     // this.saveAddress();
   }
 
-  getResult(result)
-  {
+  getResult(result) {
     this.value = [];
     let temp = '';
-    result.forEach(item =>
-    {
+    result.forEach(item => {
       this.value.push(item.label || item);
       temp += item.label || item;
     });
@@ -106,35 +101,27 @@ export class DetailAddressPage implements OnInit
   }
 
 
-  getValue(result)
-  {
+  getValue(result) {
     const value = [];
     let temp = '';
-    result.forEach(item =>
-    {
+    result.forEach(item => {
       value.push(item.value || item);
       temp += item.value || item;
     });
     return value;
   }
 
-  ngOnInit()
-  {
+  ngOnInit() {
     this.addressData = this.cityService.getAddressData();
     console.log('初始化地址是：', this.addressData);
   }
-  sureAddress()
-  {
+  sureAddress() {
     this.saveAddress();
     console.log('确认地址是：', this.addressData);
 
   }
-  back()
-  {
-    // href = "/tabs/tab2"
-  }
-  async chooseCity()
-  {
+
+  async chooseCity() {
     console.log('选择城市：');
     const modal = await this.modalController.create({
       component: ChooseCityComponent,
@@ -144,25 +131,21 @@ export class DetailAddressPage implements OnInit
     // 模态返回 数据
     const { data } = await modal.onDidDismiss();
     console.log(data);
-    if (data)
-    {
+    if (data) {
       this.addressData.cityName = data['res'].name;
     }
 
   }
 
-  onchange()
-  {
+  onchange() {
     console.log('change doorNum', this.addressData.doorNum);
     // this.saveAddress();
   }
-  onDismiss1()
-  {
+  onDismiss1() {
     console.log('cancel');
   }
 
-  async chooseDetailAddressFromMap()
-  {
+  async chooseDetailAddressFromMap() {
     console.log('选择地址');
     const modal = await this.modalController.create({
       component: ChooseAddressComponent,
@@ -172,8 +155,7 @@ export class DetailAddressPage implements OnInit
     // 模态返回 数据
     const { data } = await modal.onDidDismiss();
     console.log(data);
-    if (data)
-    {
+    if (data) {
       console.log('地图选址为：', data['res']);
       this.addressData = data['res'];
       console.log('地图选址为：', this.addressData);
@@ -182,8 +164,7 @@ export class DetailAddressPage implements OnInit
     }
   }
 
-  saveAddress()
-  {
+  saveAddress() {
     this.cityService.setAddressData(this.addressData);
   }
 }
