@@ -37,7 +37,7 @@ export class Tab2Page
     {
       id: 3,
       first: 'HE',
-      last: 'jin',
+      last: 'zhujin',
     }
   ]
 
