@@ -1,14 +1,18 @@
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptionsArgs } from '@angular/http';
-import { Observable, observable } from 'rxjs';
+
 import { Geolocation, Geoposition } from '@ionic-native/geolocation/ngx';
+
+import { Observable, observable } from 'rxjs';
 declare var BMap;
 @Injectable({
   providedIn: 'root'
 })
-export class CityService {
+export class CityService
+{
 
+  headers: any;
   public addressData: any = {
     cityCode: 4403,
     districtCode: Number,
@@ -22,14 +26,17 @@ export class CityService {
 
   };
 
-  constructor(private httpService: Http, public httpJsp:HttpClient,private geolocation: Geolocation) {
-    if (!localStorage.getItem('kAddress')) {
+  constructor(private httpService: Http, public httpJsp: HttpClient, private geolocation: Geolocation)
+  {
+    if (!localStorage.getItem('kAddress'))
+    {
       this.setAddressData(this.addressData);
     }
   }
 
-  public getLocation(): Promise<Geoposition>{
-    
+  public getLocation(): Promise<Geoposition>
+  {
+
     // let watch = this.geolocation.watchPosition();
     // watch.subscribe((data) => {
     //  // data can be a set of coordinates, or an error (if an error occurred).
@@ -40,73 +47,82 @@ export class CityService {
     //  }
     // });
 
-    return new Promise ((resolve,reject) =>{
-      //插件原生方法对 andriod 网页 无效 google
+    return new Promise((resolve, reject) =>
+    {
+      // 插件原生方法对 andriod 网页 无效 google
       // this.geolocation.getCurrentPosition().then((resp) => {
       //   console.log('get location', resp.coords.longitude --- resp.coords.latitude);
       //   resolve(resp);
-  
+
       //  }).catch((error) => {
       //    console.log('Error getting location', error);
       //  });
 
-//       var geolocation = new BMap.Geolocation();
-//       geolocation.getCurrentPosition(function(r){
-// 	    if(this.getStatus() == BMAP_STATUS_SUCCESS){
-// 		    var mk = new BMap.Marker(r.point);
-// 		    // map.addOverlay(mk);
-// 		    // map.panTo(r.point);
-//         console.log('您的位置：'+r.point.lng+','+r.point.lat);
-// 	}
-// 	else {
-// 		alert('failed'+this.getStatus());
-// 	}        
-// });
+      //       var geolocation = new BMap.Geolocation();
+      //       geolocation.getCurrentPosition(function(r){
+      // 	    if(this.getStatus() == BMAP_STATUS_SUCCESS){
+      // 		    var mk = new BMap.Marker(r.point);
+      // 		    // map.addOverlay(mk);
+      // 		    // map.panTo(r.point);
+      //         console.log('您的位置：'+r.point.lng+','+r.point.lat);
+      // 	}
+      // 	else {
+      // 		alert('failed'+this.getStatus());
+      // 	}
+      // });
 
       //
-      let that = this;
-      var myCity = new BMap.LocalCity();// IP定位
-      myCity.get(function (result) {
-        
-          console.log('定位到当前城市',result.name);
-          resolve(result);
-          // alert('定位到当前城市'+ that.locationCity);
-          // return result.name;
-     });
+      const that = this;
+      var myCity = new BMap.LocalCity(); // IP定位
+      myCity.get(function (result)
+      {
+
+        console.log('定位到当前城市', result.name);
+        resolve(result);
+        // alert('定位到当前城市'+ that.locationCity);
+        // return result.name;
+      });
     });
-    
+
   }
-  getNetWorkDataDemo(): Observable<Response> {
+  getNetWorkDataDemo(): Observable<Response>
+  {
     return this.httpService.request('http://jsonplaceholder.typicode.com/users');
   }
 
-  getLocalCityData() {
+  getLocalCityData()
+  {
     return this.httpService.get('assets/json/district.json');
   }
 
-  
-  searchAddress(region: String, keyWord: string) {
-    
-    // const httpOptions = {'headers': { 'Content-Type': 'application/json' }};
-    const api = 'http://api.map.baidu.com/place/v2/search?query=' + keyWord + '&region=' + region + '&output=json&ak=OU0ejFYGO1a2EMwLlcBQ7iklFWEyA0io';
-    // return this.httpService.get(api, httpOptions);
-    return new Promise((resolve,reject)=>{
-      
-      this.httpJsp.jsonp(api,'callback').subscribe(response => {
-        console.log(response);  
-         resolve(response);
-          });
-    })
 
-    
+  searchAddress(region: String, keyWord: string)
+  {
+    this.headers = new HttpHeaders({ 'Content-Type': 'application/json;charset=UTF-8' });
+    // tslint:disable-next-line:max-line-length
+    const api = 'http://api.map.baidu.com/place/v2/search?query=' + keyWord + '&region=' + region + '&output=json&ak=OU0ejFYGO1a2EMwLlcBQ7iklFWEyA0io';
+    return this.httpService.get(api, { headers: this.headers });
+    // return new Promise((resolve, reject) =>
+    // {
+
+    //   this.httpJsp.jsonp(api, 'callback').subscribe(response =>
+    //   {
+    //     console.log(response);
+    //     resolve(response);
+    //   });
+    // });
+
+
   }
 
-  public getAddressData() {
+  public getAddressData()
+  {
     this.addressData = JSON.parse(localStorage.getItem('kAddress'));
     return this.addressData;
   }
 
-  public setAddressData(data) {
+  public setAddressData(data)
+  {
     // 将数据写入localStorage
     localStorage.setItem('kAddress', JSON.stringify(data));
   }

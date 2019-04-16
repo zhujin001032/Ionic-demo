@@ -25,22 +25,20 @@ hr{
     width: 100%;
     min-height: 55px;
     display: flex;
-    .title{
+    .title ,.address{
         width: 30%;
-        line-height: 58px;
         text-align: left;
         display: inline-block;
         vertical-align: middle;
         padding-left: 5px;
+        margin: auto;
     }
     ion-input{
         flex: 1px;
     }
     .address{
         flex: 1px;
-        text-align: left;
-        display: inline-block;
-        vertical-align: middle;
+
     }
     
 
@@ -48,7 +46,7 @@ hr{
 .location-icon{
     width: 12px;
     height: 16px;
-    right: 1rem;
+    right: 1.2rem;
     vertical-align:middle;
     max-width:28px;
     max-height:28px;

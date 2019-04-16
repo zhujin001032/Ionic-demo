@@ -14,7 +14,8 @@ declare var BMap;
   templateUrl: './choose-address.component.html',
   styleUrls: ['./choose-address.component.scss'],
 })
-export class ChooseAddressComponent implements OnInit {
+export class ChooseAddressComponent implements OnInit
+{
 
   public mapId: any;
   public keyWord = '';
@@ -41,12 +42,14 @@ export class ChooseAddressComponent implements OnInit {
     private navController: NavController,
     public cityService: CityService,
 
-  ) {
+  )
+  {
     this.mapId = 'mapId' + new Date().getTime();
   }
 
   // 5.父组件接收到数据会调用自己的  方法，这个时候就能拿到子组件的数据
-  selectAddress(addressObj) {
+  selectAddress(addressObj)
+  {
     /**
      *  DE: ["房地产"]
         Ei: "房地产"
@@ -69,45 +72,61 @@ export class ChooseAddressComponent implements OnInit {
     console.log('tag-address.component子组件传回来的address', addressObj);
     this.modalController.dismiss({ 'res': this.addressData });
   }
-  ngOnInit() {
+  ngOnInit()
+  {
     this.clicked = false;
     this.dataPoint = { lng: 113.9243750297165, lat: 22.512403862481392 };
     this.addressData = this.cityService.getAddressData();
   }
 
-  keydown() {
+  keydown()
+  {
     console.log(this.keyWord);
-    this.searchMap();
-    if (this.keyWord.length === 0) {
+    // this.searchMap();
+    this.cityService.searchAddress('深圳', this.keyWord).subscribe((res =>
+    {
+      console.log(res);
+    }));
+    if (this.keyWord.length === 0)
+    {
       this.addressList = [];
-    } else {
+    } else
+    {
     }
   }
-  scroll() {
+
+
+  scroll()
+  {
     // console.log("打印log日志");实时看下效果
     console.log('开始滚动！');
     // this.searchBar.ion - input.blur();
 
   }
-  getUserLocation(){
+  getUserLocation()
+  {
     let that = this;
-    this.cityService.getLocation().then((result:any)=>{
-       console.log('定位到当前城市',result.name,'坐标',result.center);
-       that.showMap(result.center);
-       //TODO: 
-       that.map.centerAndZoom(new BMap.Point(116.404, 39.915), 11); 
-         
+    this.cityService.getLocation().then((result: any) =>
+    {
+      console.log('定位到当前城市', result.name, '坐标', result.center);
+      that.showMap(result.center);
+      // TODO:
+      that.map.centerAndZoom(new BMap.Point(116.404, 39.915), 11);
+
 
     })
   }
 
 
   // 搜索地址
-  searchMap() {
+  searchMap()
+  {
     const that = this;
-    if (this.keyWord === '') {
+    if (this.keyWord === '')
+    {
 
-      setTimeout(function () {
+      setTimeout(function ()
+      {
         that.showMap(that.dataPoint);
       }, 100);
       return;
@@ -121,10 +140,13 @@ export class ChooseAddressComponent implements OnInit {
       onSearchComplete: refreshList
     });
 
-    function refreshList() {
-      if (local.getResults() !== undefined) {
+    function refreshList()
+    {
+      if (local.getResults() !== undefined)
+      {
         that.map.clearOverlays(); // 清除地图上所有覆盖物
-        if (local.getResults().Lq !== undefined) {
+        if (local.getResults().Lq !== undefined)
+        {
           that.addressList = local.getResults().Lq;
           console.log(that.addressList);
         }
@@ -149,20 +171,24 @@ type: 0
 uid: "fa7da3e89345e66242d63e4b"
 }
 */
-  backWithAddress() {
+  backWithAddress()
+  {
     this.modalController.dismiss();
   }
   // 百度地图
   // tslint:disable-next-line:use-life-cycle-interface
-  ngAfterViewInit() {
+  ngAfterViewInit()
+  {
     const that = this;
-    setTimeout(function () {
+    setTimeout(function ()
+    {
       that.showMap(that.dataPoint);
     }, 100);
   }
 
 
-  showMap(poi) {
+  showMap(poi)
+  {
     const map = new BMap.Map(this.mapId);
     map.addControl(new BMap.GeolocationControl('BMAP_ANCHOR_TOP_RIGHT'));
 
@@ -170,7 +196,8 @@ uid: "fa7da3e89345e66242d63e4b"
     this.map = map;
     // let pointcode = {lng: 116.404, lat: 39.915};
     let pointCode = poi;
-    map.addEventListener('touchend', e => {
+    map.addEventListener('touchend', e =>
+    {
       this.clicked = true;
       pointCode = {
         lng: e.point.lng,
@@ -191,7 +218,8 @@ uid: "fa7da3e89345e66242d63e4b"
     map.centerAndZoom(point, 18);
     map.enableScrollWheelZoom(true);
     map.enableContinuousZoom(); // 连续缩放效果，默认禁用
-    if (this.clicked) {
+    if (this.clicked)
+    {
       map.addOverlay(marker);
       console.log('addOverlay\n');
     }
@@ -200,17 +228,20 @@ uid: "fa7da3e89345e66242d63e4b"
 
 
   // 将经纬度解析成地址
-  pointToAddress(point) {
+  pointToAddress(point)
+  {
     const that = this;
     const geo = new BMap.Geocoder();
-    geo.getLocation(point, function (obj) {
+    geo.getLocation(point, function (obj)
+    {
       that.address = obj.addressComponents.street + obj.addressComponents.streetNumber;
       console.log('当前经纬度：', obj.surroundingPois);
       that.tagData = obj.surroundingPois;
     });
   }
 
-  refreshMapList(data: any) {
+  refreshMapList(data: any)
+  {
     console.log(data);
   }
 
@@ -223,11 +254,13 @@ uid: "fa7da3e89345e66242d63e4b"
   //   }
   // }
 
-  selectAddres(addressData) {
+  selectAddres(addressData)
+  {
     this.modalController.dismiss({ 'res': addressData });
   }
 
-  doSomething(obj) {
+  doSomething(obj)
+  {
 
 
   }
